@@ -10,14 +10,23 @@ import java.util.*;
 public class DirectionMapper {
 
     private ObjectMapper objectMapper = new ObjectMapper();
-    private List<Direction> directions;
 
-    public List<Direction> fromTxt2Directions(String fileName) {
+    public void fromTxtToJson(String fileName, String suffix) {
+        fromTxt2Directions(fileName).forEach(direction -> {
+            try {
+                objectMapper.writeValue(new File(String.format("target/%s", direction.getJsonFullName(suffix))), direction);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private List<Direction> fromTxt2Directions(String fileName) {
         List<Direction> directions = new ArrayList<>();
 
         StringBuilder result = new StringBuilder();
 
-        //Get file from resources folder
+        // Get file from resources folder
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource(fileName).getFile());
 
@@ -48,26 +57,12 @@ public class DirectionMapper {
                             timingsSet.add(Integer.valueOf(timings[j].split(":")[1].trim()));
                         }
                         direction.addTimings(hour, timingsSet);
-                        //System.out.println(timings);
                     }
                     ++i;
                 }
                 directions.add(direction);
             }
         }
-        //Arrays.asList(result.toString().split("\\.")).forEach(l -> System.out.println(l + "\\n"));
-        this.directions = directions;
-
         return directions;
-    }
-
-    public void fromTxtToJson(String fileName, String suffix) {
-        fromTxt2Directions(fileName).forEach(direction -> {
-            try {
-                objectMapper.writeValue(new File(String.format("target/%s", direction.getJsonFullName(suffix))), direction);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
     }
 }
