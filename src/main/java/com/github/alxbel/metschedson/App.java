@@ -6,5 +6,6 @@ public class App {
     public static void main(String[] args) {
         DirectionMapper mapper = new DirectionMapper();
         mapper.fromTxtToJson("directions_wd.txt", "wd");
+        mapper.fromTxtToJson("directions_we.txt", "we");
     }
 }
