@@ -21,7 +21,7 @@ public class DirectionMapper {
         });
     }
 
-    private List<Direction> fromTxt2Directions(String fileName) {
+    public List<Direction> fromTxt2Directions(String fileName) {
         List<Direction> directions = new ArrayList<>();
 
         StringBuilder result = new StringBuilder();

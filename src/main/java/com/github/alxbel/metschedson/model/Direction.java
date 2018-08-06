@@ -26,6 +26,10 @@ public class Direction {
         return "'" + name + '\'';
     }
 
+    public String toResourceString() {
+        return String.format("<string name=\"direction_%s\">%s</string>", jsonName, name);
+    }
+
     public String getName() {
         return name;
     }
